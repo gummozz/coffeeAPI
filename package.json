@@ -1,7 +1,6 @@
 {
   "name": "coffeeapi",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "dependencies": {
     "express": "^4.16.4",
@@ -13,5 +12,14 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gummozz/coffeeAPI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gummozz/coffeeAPI/issues"
+  },
+  "homepage": "https://github.com/gummozz/coffeeAPI#readme",
+  "description": ""
 }

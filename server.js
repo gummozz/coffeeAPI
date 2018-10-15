@@ -1,6 +1,11 @@
 // Main requirements
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
+
+// remember this
+// let yes = new jsonGenerator('yes');
+
 // Custom modules
 const jsonGeneratorModule = require('./jsonGenerator.js');
 const jsonGenerator = jsonGeneratorModule.jsonGenerator
@@ -13,34 +18,32 @@ global.Data = [];
 // Setup app base
 const app = express();
 
-// Middle thing that logs all the requested URLs
-app.use((request, response, next) => {
-    console.log(request.url)
-    next()
-})
+app.use(bodyParser.urlencoded({ extended: true}));
+
+// Configuring the database
+const dbConfig = require('./config/database.config.js');
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+
+// Connecting to the database
+mongoose.connect(dbConfig.url, {
+    useNewUrlParser: true
+}).then(() => {
+    console.log("Successfully connected to the database");    
+}).catch(err => {
+    console.log('Could not connect to the database. Exiting now...', err);
+    process.exit();
+});
+
+app.use(bodyParser.json());
 
 // "Index" - simply print Json for now
 app.get('/', (request, response) => {
-    response.json(global.Data);
+    response.json({"message": "hi fam"})
 })
 
-// Temp - replace with actual REST POST methods
-app.get('/yes', (request, response) => {
-
-    let yes = new jsonGenerator('yes');
-    
-    global.Data.push(yes);
-    response.sendStatus(200);
-})
-
-// Temp - replace with actual REST POST methods
-app.get('/no', (request, response) => {
-
-    let no = new jsonGenerator('no');
-    
-    global.Data.push(no);
-    response.sendStatus(200);
-})
+require('./app/routes/data.routes.js')(app);
 
 //Nginx configured to proxy / to this app (as I'm writing this)
 app.listen(3000);
