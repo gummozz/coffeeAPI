@@ -3,18 +3,6 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// remember this
-// let yes = new jsonGenerator('yes');
-
-// Custom modules
-const jsonGeneratorModule = require('./jsonGenerator.js');
-const jsonGenerator = jsonGeneratorModule.jsonGenerator
-
-// Begin
-
-// Array to store data in - this is temporary and will be replaced by MongoDB ASAP
-global.Data = [];
-
 // Setup app base
 const app = express();
 
